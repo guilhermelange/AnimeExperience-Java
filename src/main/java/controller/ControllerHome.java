@@ -1,7 +1,7 @@
 package controller;
 
 import conf.Util;
-import daos.DataBase;
+import daos.AnimeDAO;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 import javax.swing.JFrame;
 import model.Anime;
-import model.User;
+import model.Usuario;
 import view.ViewHome;
 
 public class ControllerHome implements ControllerView {
@@ -54,7 +53,10 @@ public class ControllerHome implements ControllerView {
         HashMap<Point, model.Anime> animesIndex = new HashMap<Point, Anime>();
         viewHome.setAnimesIndex(animesIndex);
         viewHome.getJPcontainer().setPreferredSize(new Dimension(720, 1400));
-        ArrayList<Anime> animes = DataBase.getAnimes();
+        
+        AnimeDAO animeDAO = new AnimeDAO();
+        ArrayList<Anime> animes = animeDAO.buscaTodos();
+        
         animes.sort(new Comparator<Anime>(){
             Random random = new Random();
             @Override
@@ -62,12 +64,10 @@ public class ControllerHome implements ControllerView {
                 return Integer.compare(random.nextInt(), random.nextInt());
             }
         });
+       
         
-        Optional<User> findFirst = DataBase.getUsuarios()
-                                              .stream()
-                                              .filter(user -> user.isAuthenticate())
-                                              .findFirst();
-        viewHome.getJLnome().setText(findFirst.get().getName());
+        Usuario usuario = Session.getUsuario();
+        viewHome.getJLnome().setText(usuario.getName());
         
         Stream<Anime> filter = animes.stream().filter(anime -> anime.getIndex() == 1);
         Util.setOneLineTable(viewHome.getJTnovos(), 1, viewHome.getJScrollPane1(), filter, animesIndex);
@@ -99,7 +99,7 @@ public class ControllerHome implements ControllerView {
                 for (Map.Entry<Point, model.Anime> entry : viewHome.getAnimesIndex().entrySet()) {
                     Point key = entry.getKey();
                     if (key.y == col && key.x == 1) {
-                        DataBase.setAnimeCarregado(entry.getValue());
+                        Session.setAnime(entry.getValue());
                     }
                 }
                 Route.initController(ControllerAnime.class);
@@ -115,7 +115,7 @@ public class ControllerHome implements ControllerView {
                 for (Map.Entry<Point, model.Anime> entry : viewHome.getAnimesIndex().entrySet()) {
                     Point key = entry.getKey();
                     if (key.y == col && key.x == 0) {
-                        DataBase.setAnimeCarregado(entry.getValue());
+                        Session.setAnime(entry.getValue());
                     }
                 }
                 Route.initController(ControllerAnime.class);

@@ -1,13 +1,21 @@
 package model;
 
-public class PlayList extends Media implements Collection {
+public class PlayList implements Colecao {
+    private long id;
+    private long animeId;
     private String link;
-    private static long currentId;
+    private String nome;
 
-    public PlayList(String nome, String descricao, String link) {
-        super(nome, descricao);
+    public PlayList(String nome, String link) {
+        this.nome = nome;
         this.link = link;
-        this.setId(++currentId);
+    }
+    
+    public PlayList(String nome, String link, long id, long animeId) {
+        this.nome = nome;
+        this.link = link;
+        this.id = id;
+        this.animeId = animeId;
     }
 
     public int getQtdMidias() {
@@ -21,5 +29,9 @@ public class PlayList extends Media implements Collection {
 
     public String getLink() {
         return link;
+    }
+
+    public void setAnime(long animeId) {
+        this.animeId = animeId;
     }
 }

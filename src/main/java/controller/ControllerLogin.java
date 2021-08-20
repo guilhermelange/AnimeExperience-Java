@@ -1,14 +1,14 @@
 package controller;
 
 import conf.Util;
-import exceptions.NotFoundException;
+import daos.UsuarioDAO;
+import exceptions.AutenticationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
-import model.Authenticate;
-import model.User;
+import model.Usuario;
 import view.ViewLogin;
 
 public class ControllerLogin implements ControllerView {
@@ -66,12 +66,20 @@ public class ControllerLogin implements ControllerView {
             public void actionPerformed(ActionEvent e) {
                 String email = viewLogin.getEmail();
                 String password = viewLogin.getPassword();
-                Authenticate user = new User(email, password, "");
+                Usuario user = new Usuario(email, password, "");
+                
                 try {
-                    user.authenticate();
-                    Route.initController(ControllerHome.class);
-                } catch (NotFoundException ex) {
-                    Util.message("Algo está incorreto, tente novamente!");
+                    UsuarioDAO usuarioDAO = new UsuarioDAO();
+                    Usuario usuario = usuarioDAO.buscaUsuario(email, password);
+                    if (usuario == null) {
+                        throw new AutenticationException("Usuário não localizado!");
+                    } else {
+                        usuario.setAuthenticates(true);
+                        Session.setUsuario(usuario);
+                        Route.initController(ControllerHome.class);
+                    }
+                } catch (Exception ex) {
+                    Util.message(ex.getMessage());
                 }
             }
         });

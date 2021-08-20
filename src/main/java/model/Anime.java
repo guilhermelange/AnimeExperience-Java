@@ -1,33 +1,55 @@
 package model;
 
+import controller.Session;
+import daos.AnimeDAO;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Anime extends Media implements Comparable<Anime>{
-    private ArrayList<Author> autores;
+public class Anime implements Comparable<Anime>, Serializable {
+    private long id;
+    private String nome;
+    private String descricao;
     private String imagem;
     private int anoCriacao;
     private int classificacaoIndicativa;
-    private boolean favorito;
-    private ArrayList<Season> temporadas;
-    private ArrayList<PlayList> playlists;
     private int index;
+    private List<Autor> autores;
+    private List<Temporada> temporadas;
+    private List<PlayList> playlists;
     
     public Anime(String nome, String descricao, int ano_criacao, int classificacao_indicativa, String imagem) {
-        super(nome, descricao);
+        this.nome = nome;
+        this.descricao = descricao;
         this.anoCriacao = ano_criacao;
         this.classificacaoIndicativa = classificacao_indicativa;
         this.imagem = imagem;
-        temporadas = new ArrayList<Season>();
+        temporadas = new ArrayList<Temporada>();
         playlists = new ArrayList<PlayList>();
         this.index = 0;
-        this.favorito = false;
+    }
+    
+    public Anime(String nome, String descricao, int ano_criacao, int classificacao_indicativa, String imagem, long id) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.anoCriacao = ano_criacao;
+        this.classificacaoIndicativa = classificacao_indicativa;
+        this.imagem = imagem;
+        temporadas = new ArrayList<Temporada>();
+        playlists = new ArrayList<PlayList>();
+        this.index = 0;
+        this.id = id;
     }
 
+    public long getId() {
+        return id;
+    }
+    
     public int getAnoCriacao() {
         return anoCriacao;
     }
 
-    public ArrayList<Author> getAutores() {
+    public List<Autor> getAutores() {
         return autores;
     }
 
@@ -35,19 +57,29 @@ public class Anime extends Media implements Comparable<Anime>{
         return classificacaoIndicativa;
     }
 
-    public ArrayList<Season> getTemporadas() {
+    public List<Temporada> getTemporadas() {
         return temporadas;
     }
 
-    public ArrayList<PlayList> getPlaylists() {
+    public List<PlayList> getPlaylists() {
         return playlists;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
     
-    public void addTemporada(Season novaTemporada) {
+    public void addTemporada(Temporada novaTemporada) {
+        novaTemporada.setAnime(getId());
         getTemporadas().add(novaTemporada);
     }
     
     public void addPlayList(PlayList novaPlayList) {
+        novaPlayList.setAnime(getId());
         getPlaylists().add(novaPlayList);
     }
 
@@ -55,6 +87,10 @@ public class Anime extends Media implements Comparable<Anime>{
         return index;
     }
 
+    public boolean isFavorito() {
+        return new AnimeDAO().buscaAnimeFavorito(getId(), Session.getUsuario().getId());
+    }
+    
     public void setIndex(int index) {
         this.index = index;
     }
@@ -68,12 +104,8 @@ public class Anime extends Media implements Comparable<Anime>{
         return imagem;
     }
 
-    public boolean isFavorito() {
-        return favorito;
-    }
-
-    public void setFavorito(boolean favorito) {
-        this.favorito = favorito;
+    public void setId(long id) {
+        this.id = id;
     }
     
     @Override

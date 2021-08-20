@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-             version="2.0">
-
-    <persistence-unit name="hibernatejpa" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
-        <class>br.com.projeto.model.Produto</class>
-        <class>br.com.projeto.model.Pedido</class>
-        <class>br.com.projeto.model.Pessoa</class>
-	
-
-		<properties>
-		      <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
-		      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:banco6.sqlite3" />
-		      <property name="javax.persistence.jdbc.user" value="sa" />
-		      <property name="javax.persistence.jdbc.password" value="sa" />
-		
-		      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect"/>
-		      <property name="hibernate.hbm2ddl.auto" value="update" />
-		      <property name="hibernate.show_sql" value="true" />
-   			  <property name="hibernate.format_sql" value="true" />
-		      <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
-	    </properties>
-    
-    </persistence-unit>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+<!--  <persistence-unit name="anexjpa" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>model.Anime</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+       DB Driver 
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/anex"/>
+       BD Mane 
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+       DB User 
+      <property name="javax.persistence.jdbc.password" value="postgres"/>
+       DB Password 
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+       DB Dialect 
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+       create / create-drop / update 
+      <property name="hibernate.show_sql" value="true"/>
+       Show SQL in console 
+      <property name="hibernate.format_sql" value="false"/>
+       Show SQL formatted 
+      <property name="javax.persistence.schema-generation.database.action" value="create"/> 
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="hibernate.connection.autocommit" value="true"/>
+    </properties>
+  </persistence-unit>-->
 </persistence>

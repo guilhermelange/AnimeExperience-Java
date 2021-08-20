@@ -1,7 +1,5 @@
 package view;
 
-import conf.Util;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -12,15 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import model.Anime;
-import model.Episode;
-import model.Season;
-import model.Collection;
+import model.Episodio;
+import model.Colecao;
 
 public class ViewAnime extends javax.swing.JFrame {
-    private ArrayList<Episode> episodiosIndex;
+    private ArrayList<Episodio> episodiosIndex;
     private model.Anime animeSessao;
 
     public ViewAnime() {
@@ -67,7 +62,7 @@ public class ViewAnime extends javax.swing.JFrame {
         return jPanel2;
     }
 
-    public JComboBox<Collection> getJCtemporadas() {
+    public JComboBox<Colecao> getJCtemporadas() {
         return jCtemporadas;
     }
     
@@ -97,39 +92,6 @@ public class ViewAnime extends javax.swing.JFrame {
     
     public void jCtemporadasActionPerformed(ActionListener acao) {                                             
         jCtemporadas.addActionListener(acao);
-    }
-    
-    private void updateEpisodios() {
-        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jTable1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        TableColumnModel columnModel = jTable1.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(140);
-        columnModel.getColumn(1).setPreferredWidth(1200);
-        columnModel.getColumn(0).setCellRenderer(Util.getNumberEpCellRender());
-        columnModel.getColumn(1).setCellRenderer(Util.getDescriptionCellRender());
-        jScrollPane1.setPreferredSize(new Dimension(1340, 600));
-        jTable1.setRowHeight(40);
-        
-        DefaultTableModel dm = (DefaultTableModel) jTable1.getModel();
-        while (dm.getRowCount() > 0) {
-            dm.removeRow(0);
-        }
-
-        Season tempSelected = (Season) jCtemporadas.getSelectedItem();
-        episodiosIndex = new ArrayList<Episode>();
-        try {
-            ArrayList<Episode> episodios = tempSelected.getEpisodios();
-            for (int i = 0; i < episodios.size(); i++) {
-                Episode episodio = episodios.get(i);
-                ArrayList row = new ArrayList();
-                episodiosIndex.add(i, episodio);
-                row.add(episodio.getNumero());
-                row.add(episodio.getDescricao());
-                dm.addRow(row.toArray());
-            }
-        } catch (Exception e) {
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -371,7 +333,7 @@ public class ViewAnime extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAnimeNome;
-    private javax.swing.JComboBox<model.Collection> jCtemporadas;
+    private javax.swing.JComboBox<model.Colecao> jCtemporadas;
     private javax.swing.JInternalFrame jInternalFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;

@@ -9,8 +9,6 @@ import javax.swing.JTextField;
 public class ViewLogin extends javax.swing.JFrame {
     public ViewLogin() {
         initComponents();
-        Util.applyPlaceholder(jTemail, "exemplo@dominio.com");
-        Util.preventSize(jPpassword);
     }
     
     @SuppressWarnings("unchecked")

@@ -9,26 +9,37 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <hibernate.version>5.2.10.Final</hibernate.version>
+        <hibernate.version>5.4.10.Final</hibernate.version>
         <compiler.version>3.6.1</compiler.version>
     </properties>
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
             <version>2.2</version>
-        </dependency>
+        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
-        <dependency>
+<!--        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.xml/jaxb-api -->
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+  	</dependency>-->
+        <!-- https://mvnrepository.com/artifact/javax.xml/jaxb-api -->
+<!--        <dependency>
             <groupId>javax.xml</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.1</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.23</version>
         </dependency>
         <dependency>
             <groupId>flatlaf</groupId>
@@ -49,6 +60,12 @@
             <groupId>jxbrowser-swing</groupId>
             <artifactId>jxbrowser-swing</artifactId>
             <version>1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.3.9</version>
         </dependency>
     </dependencies>
 </project>

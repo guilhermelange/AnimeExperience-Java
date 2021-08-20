@@ -1,6 +1,6 @@
 package model;
 
-public interface Collection  {
+public interface Colecao  {
     public abstract int getQtdMidias();
     public abstract int getTotal();
 }

@@ -1,50 +1,18 @@
 package view;
 
-import conf.Util;
-import daos.DataBase;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Stream;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import model.Anime;
-import model.User;
 
 public class ViewHome extends javax.swing.JFrame {
     private HashMap<Point, model.Anime> animesIndex;
     public ViewHome() {
         initComponents();
-        animesIndex = new HashMap<Point, model.Anime>();
-        jPcontainer.setPreferredSize(new Dimension(720, 1400));
-        ArrayList<model.Anime> animes = DataBase.getAnimes();
-        animes.sort(new Comparator<model.Anime>(){
-            Random random = new Random();
-            @Override
-            public int compare(model.Anime o1, model.Anime o2) {
-                return Integer.compare(random.nextInt(), random.nextInt());
-            }
-        });
-        
-        Optional<User> findFirst = DataBase.getUsuarios()
-                                              .stream()
-                                              .filter(user -> user.isAuthenticate())
-                                              .findFirst();
-        jLnome.setText(findFirst.get().getName());
-        
-        
-        Stream<model.Anime> filter = animes.stream().filter(anime -> anime.getIndex() == 1);
-        Util.setOneLineTable(jTnovos, 1, jScrollPane1, filter, animesIndex);
-        
-        filter = animes.stream().filter(anime -> anime.getIndex() == 0);
-        Util.setOneLineTable(jTPopulares, 0, jScrollPane3, filter, animesIndex);
     }
     
     @SuppressWarnings("unchecked")

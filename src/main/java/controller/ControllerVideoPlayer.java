@@ -3,13 +3,12 @@ package controller;
 import com.teamdev.jxbrowser.browser.Browser;
 import conf.JXBrowserV2;
 import conf.Util;
-import daos.DataBase;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import model.Anime;
-import model.Episode;
+import model.Episodio;
 import view.ViewVideoPlayer;
 
 public class ControllerVideoPlayer implements ControllerView {
@@ -42,8 +41,8 @@ public class ControllerVideoPlayer implements ControllerView {
     
     @Override
     public void applyViewDefaults() {
-        Anime animeCarregado = DataBase.getAnimeCarregado();
-        Episode episodioCarregado = DataBase.getEpisodioCarregado();
+        Anime animeCarregado = Session.getAnime();
+        Episodio episodioCarregado = Session.getEpisodio();
         
         // Campos na tela
         viewVideoPlayer.getJAnimeName().setText(animeCarregado.getNome());

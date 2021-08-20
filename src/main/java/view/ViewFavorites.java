@@ -1,37 +1,18 @@
 package view;
 
-import conf.Util;
-import daos.DataBase;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Optional;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import model.Anime;
-import model.User;
 
 public class ViewFavorites extends javax.swing.JFrame {
     public HashMap<Point, Anime> animesIndex = new HashMap<Point, Anime>();
     public ViewFavorites() {
         initComponents();
-        jPcontainer.setPreferredSize(new Dimension(1000, 1400));
-        ArrayList<Anime> animes = DataBase.getAnimes();
-        Collections.sort(animes);
-        
-        Optional<User> usuario = DataBase.getUsuarios()
-                                            .stream()
-                                            .filter(user -> user.isAuthenticate())
-                                            .findFirst();
-        jLnome.setText(usuario.get().getName());
-        
-        Util.setMultiLineTable(jTPopulares, jScrollPane3, animes, animesIndex);
-        
     }
 
     public HashMap<Point, Anime> getAnimesIndex() {

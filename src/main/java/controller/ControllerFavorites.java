@@ -1,7 +1,7 @@
 package controller;
 
 import conf.Util;
-import daos.DataBase;
+import daos.AnimeDAO;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import javax.swing.JFrame;
 import model.Anime;
-import model.User;
+import model.Usuario;
 import view.ViewFavorites;
 
 public class ControllerFavorites implements ControllerView {
@@ -49,14 +48,13 @@ public class ControllerFavorites implements ControllerView {
     public void applyViewDefaults() {
         HashMap<Point, Anime> animesIndex = new HashMap<Point, Anime>();
         viewFavorites.getJPcontainer().setPreferredSize(new Dimension(1000, 1400));
-        ArrayList<Anime> animes = DataBase.getAnimes();
+        
+        AnimeDAO animeDAO = new AnimeDAO();
+        ArrayList<Anime> animes = animeDAO.buscaTodosFavoritados();
         Collections.sort(animes);
         
-        Optional<User> usuario = DataBase.getUsuarios()
-                                            .stream()
-                                            .filter(user -> user.isAuthenticate())
-                                            .findFirst();
-        viewFavorites.getJLnome().setText(usuario.get().getName());
+        Usuario usuario = Session.getUsuario();
+        viewFavorites.getJLnome().setText(usuario.getName());
         
         Util.setMultiLineTable(viewFavorites.getJTPopulares(), viewFavorites.getJScrollPane3(), animes, animesIndex);
         viewFavorites.setAnimesIndex(animesIndex);
@@ -87,7 +85,7 @@ public class ControllerFavorites implements ControllerView {
                     Point key = entry.getKey();
                     if (key.y == col && key.x == row) {
                         if (!entry.getValue().getNome().equals("empty")){
-                            DataBase.setAnimeCarregado(entry.getValue());
+                            Session.setAnime(entry.getValue());
                             localizado = true;
                         }
                     }

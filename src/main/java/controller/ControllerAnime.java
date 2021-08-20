@@ -3,13 +3,17 @@ package controller;
 import com.teamdev.jxbrowser.browser.Browser;
 import conf.JXBrowserV2;
 import conf.Util;
-import daos.DataBase;
+import daos.AnimeDAO;
+import daos.EpisodioDAO;
+import daos.PlayListDAO;
+import daos.TemporadaDAO;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -17,20 +21,25 @@ import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import model.Episode;
+import model.Episodio;
 import model.PlayList;
-import model.Season;
-import model.User;
+import model.Temporada;
+import model.Usuario;
+import model.Anime;
 import view.ViewAnime;
 
 public class ControllerAnime implements ControllerView {
     private ViewAnime viewAnime;
-    private ArrayList<Episode> episodiosIndex;
-    private model.Anime animeSessao;
+    private ArrayList<Episodio> episodiosIndex;
     private Browser jxbrowser;
+    private AnimeDAO animeDAO;
+    private Anime animeCarregado;
+    private Usuario usuario;
 
     public ControllerAnime() {
         viewAnime = new ViewAnime();
+        animeDAO = new AnimeDAO();
+        animeCarregado = Session.getAnime();
         addVoltarAction();
         addFavoritarAction();
         addTableAction();
@@ -61,27 +70,23 @@ public class ControllerAnime implements ControllerView {
     
     @Override
     public void applyViewDefaults() {
+        animeCarregado = Session.getAnime();
+        
         viewAnime.getJPanel1().setPreferredSize(new Dimension(720, 1150));
         viewAnime.getJScrollPane2().setPreferredSize(new Dimension(400, 950));
         
         // Atualizar Usuário
-        Optional<User> usuario = DataBase.getUsuarios()
-                                              .stream()
-                                              .filter(user -> user.isAuthenticate())
-                                              .findFirst();
-        viewAnime.getJLusuario().setText(usuario.get().getName());
+        usuario = Session.getUsuario();
+        viewAnime.getJLusuario().setText(usuario.getName());
 
         Util.applyTextAreaProperties(viewAnime.getJTextArea1(), viewAnime.getJScrollPane3());
-        
-        // Atualiza ViewAnime
-        model.Anime animeCarregado = DataBase.getAnimeCarregado();
-        this.animeSessao = animeCarregado;
         
         PlayList playlist = null;
         if (animeCarregado != null) {
             viewAnime.getJAnimeNome().setText(animeCarregado.getNome());
             viewAnime.getJTextArea1().setText(animeCarregado.getDescricao());
-            Optional<PlayList> optionalPlay = animeCarregado.getPlaylists().stream().findFirst();
+            PlayListDAO playListDAO = new PlayListDAO();
+            Optional<PlayList> optionalPlay = playListDAO.buscaPorAnime(animeCarregado.getId()).stream().findFirst();
             if (!optionalPlay.isEmpty()) {
                 playlist = optionalPlay.get();
             }
@@ -99,12 +104,14 @@ public class ControllerAnime implements ControllerView {
         viewAnime.getJScrollPane2().setBorder(null);
 
         // Carrega Episodios;
-        ArrayList<Season> temporadas = animeCarregado.getTemporadas();
+        TemporadaDAO temporadaDAO = new TemporadaDAO();
+        List<Temporada> temporadas = temporadaDAO.buscaPorAnime(animeCarregado.getId());
+        
         viewAnime.getJCtemporadas().removeAll();
         temporadas.forEach(temporada -> {
             viewAnime.getJCtemporadas().addItem(temporada);
-            
         });
+        
         updateEpisodios();
         
         // Icon Favorito
@@ -117,6 +124,10 @@ public class ControllerAnime implements ControllerView {
         return viewAnime;
     }
 
+    private Temporada getSelectedTemp() {
+        return ((Temporada) viewAnime.getJCtemporadas().getSelectedItem());
+    }
+    
     private void updateEpisodios() {
         viewAnime.getJTable1();
         viewAnime.getJTable1().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -135,19 +146,23 @@ public class ControllerAnime implements ControllerView {
             dm.removeRow(0);
         }
 
-        Season tempSelected = (Season) viewAnime.getJCtemporadas().getSelectedItem();
-        episodiosIndex = new ArrayList<Episode>();
-        try {
-            ArrayList<Episode> episodios = tempSelected.getEpisodios();
-            for (int i = 0; i < episodios.size(); i++) {
-                Episode episodio = episodios.get(i);
-                ArrayList row = new ArrayList();
-                episodiosIndex.add(i, episodio);
-                row.add(episodio.getNumero());
-                row.add(episodio.getDescricao());
-                dm.addRow(row.toArray());
+        Temporada tempSelected = getSelectedTemp();
+        episodiosIndex = new ArrayList<Episodio>();
+        if (tempSelected != null) {
+            try {
+                EpisodioDAO episodioDAO = new EpisodioDAO();
+                List<Episodio> episodios = episodioDAO.buscaPorAnimeTemp(animeCarregado.getId(), tempSelected.getNumero());
+                for (int i = 0; i < episodios.size(); i++) {
+                    Episodio episodio = episodios.get(i);
+                    ArrayList row = new ArrayList();
+                    episodiosIndex.add(i, episodio);
+                    row.add(episodio.getNumero());
+                    row.add(episodio.getDescricao());
+                    dm.addRow(row.toArray());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
         }
     }
     
@@ -167,11 +182,12 @@ public class ControllerAnime implements ControllerView {
         viewAnime.jLfavoritoMouseClicked(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                Anime animeSessao = Session.getAnime();
                 if (animeSessao.isFavorito()) {
-                    animeSessao.setFavorito(false);
+                    animeDAO.removeFavorito(animeSessao.getId(), usuario.getId());
                     viewAnime.getJLfavorito().setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/image/favorito.png"))); // NOI18N
                 } else {
-                    animeSessao.setFavorito(true);
+                    animeDAO.insertFavorito(animeSessao.getId(), usuario.getId());
                     viewAnime.getJLfavorito().setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/image/favoritoSet.png")));
                 }
             }
@@ -183,7 +199,7 @@ public class ControllerAnime implements ControllerView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = viewAnime.getJTable1().rowAtPoint(e.getPoint());
-                DataBase.setEpisodioCarregado(episodiosIndex.get(row));
+                Session.setEpisodio(episodiosIndex.get(row));
                 Route.initController(ControllerVideoPlayer.class);
             }
         });

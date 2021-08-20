@@ -1,13 +1,13 @@
 package controller;
 
 import conf.Util;
-import daos.DataBase;
+import daos.UsuarioDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
-import model.User;
+import model.Usuario;
 import view.ViewRegister;
 
 public class ControllerRegister implements ControllerView {
@@ -58,13 +58,19 @@ public class ControllerRegister implements ControllerView {
                 if (Util.verifyIsNotEmpty(viewRegister.getJTname(), "É obrigatório informar um nome de usuário")) {
                      if (Util.verifyEmailIsValid(viewRegister.getJTemail(), "Email inválido")) {
                          if (Util.verifyIsNotEmpty(viewRegister.getJPpassword(), "É obrigatório informar uma senha")) {
-                             User newUser = new User(viewRegister.getEmail(), viewRegister.getPassword(), viewRegister.getFullName());
-                             boolean addUsuario = DataBase.addUsuario(newUser);
-                             if (addUsuario) {
-                                 Util.message("Usuário inserido com sucesso!");
-                                 Route.initController(ControllerLogin.class);
-                             } else {
-                                 Util.message("Usuário já cadastrado!");
+                            Usuario usuario = new Usuario(viewRegister.getEmail(), viewRegister.getPassword(), viewRegister.getFullName());
+                            try {
+                                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                                Usuario buscaUsuario = usuarioDAO.buscaUsuario(usuario.getEmail());
+                                if (buscaUsuario == null) {
+                                    usuarioDAO.insert(usuario);
+                                    Util.message("Usuário inserido com sucesso!");
+                                    Route.initController(ControllerLogin.class);
+                                } else {
+                                    Util.message("Usuário já cadastrado!");
+                                }
+                             } catch (Exception ex) {
+                                 Util.message(ex.getMessage());
                              }
                          }
                      }
