@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class Route {
+public class Routes {
     private static ArrayList<Class> accessHistory = new ArrayList<Class>();
     private static HashSet<ControllerView> controllers = new HashSet<ControllerView>();
     private static boolean isNext;
@@ -21,7 +21,6 @@ public class Route {
             }
         }
         
-        System.out.println("Bloq: " + blockResend + " - " + controllerClass.toString());
         if (!blockResend) {
             boolean exists = false;
             ControllerView currentController = null;
@@ -68,5 +67,18 @@ public class Route {
 
     public static HashSet<ControllerView> getControllers() {
         return controllers;
+    }
+    
+    public static void logoff() {
+        for (ControllerView controller : controllers) {
+            controller.getFrame().dispose();
+        }
+        controllers.clear();
+        accessHistory.clear();
+        
+        Session.setAnime(null);
+        Session.setEpisodio(null);
+        Session.setUsuario(null);
+        Routes.initController(ControllerLogin.class);
     }
 }

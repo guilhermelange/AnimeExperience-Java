@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConexao {
+public class DBConnection {
     private static Connection connection;
 
     public static Connection conectar() {

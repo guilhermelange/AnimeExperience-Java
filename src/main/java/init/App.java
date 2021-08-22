@@ -2,13 +2,13 @@ package init;
 
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDeepOceanIJTheme;
 import controller.ControllerLogin;
-import controller.Route;
+import controller.Routes;
 import javax.swing.UIManager;
 
 public class App {
     public static void main(String[] args) {
         appSetLookAndFeel();
-        Route.initController(ControllerLogin.class);
+        Routes.initController(ControllerLogin.class);
     }
     
     private static void appSetLookAndFeel() {

@@ -1,6 +1,6 @@
 package daos;
 
-import conf.DBConexao;
+import conf.DBConnection;
 import controller.Session;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import model.Anime;
 
 public class AnimeDAO {
     public boolean insert(Anime anime) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "INSERT INTO anime (anianocri, aniclaind, anidesc, aniimg, aniidx, aninom) "
                    + "VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pstmt;
@@ -37,12 +37,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean update(Anime anime) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "UPDATE anime SET anianocri=?, aniclaind=?, anidesc=?, aniimg=?, aniidx=?, aninom=?"
                    + "WHERE aniid = ?";
         PreparedStatement pstmt;
@@ -64,12 +64,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public Anime buscaPorId(long id) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM anime WHERE aniid = ?";
         PreparedStatement pstmt;
         Anime anime = null;
@@ -97,12 +97,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return anime;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public ArrayList<Anime> buscaTodos() {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM anime";
         PreparedStatement pstmt;
         ArrayList<Anime> animes = new ArrayList<Anime>();
@@ -129,12 +129,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return animes;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public ArrayList<Anime> buscaTodosFavoritados() {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM anime a JOIN usuario_favorito b ON a.aniid = b.aniid "
                 + " WHERE b.usuid = ?";
         PreparedStatement pstmt;
@@ -163,12 +163,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return animes;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean buscaAnimeFavorito(long animeId, long usuarioId) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT 1 FROM usuario_favorito WHERE aniid=? AND usuid=?";
         PreparedStatement pstmt;
 
@@ -190,12 +190,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return isFavorito;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean removeFavorito(long animeId, long usuarioId) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "DELETE FROM usuario_favorito "
                    + "WHERE aniid = ? AND usuid = ?";
         PreparedStatement pstmt;
@@ -211,12 +211,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean insertFavorito(long animeId, long usuarioId) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "INSERT INTO usuario_favorito (aniid, usuid)"
                    + " VALUES (?,?)";
         PreparedStatement pstmt;
@@ -232,12 +232,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public int buscaUsuarioAvaliacao(long animeId, long usuarioId) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT usuava FROM usuario_avaliacao WHERE aniid=? AND usuid=?";
         PreparedStatement pstmt;
 
@@ -259,12 +259,12 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return nota;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean insertUsuarioAvaliacao(long animeId, long usuarioId, int nota) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "INSERT INTO usuario_avaliacao (aniid, usuid, usuava) VALUES(?, ?, ?) "
                    + " ON CONFLICT (aniid, usuid) DO  "
                    + " UPDATE SET usuava = ? WHERE usuario_avaliacao.aniid = ? AND usuario_avaliacao.usuid = ?";
@@ -285,13 +285,13 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
         
 
     public double buscaAvaliacaoGeral(long animeId, long usuarioId) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT round(COALESCE(sum(usuava)::NUMERIC/count(*), 0), 1) AS nota "
                    + " FROM usuario_avaliacao "
                    + " WHERE aniid = ?";
@@ -314,7 +314,7 @@ public class AnimeDAO {
             System.out.println(e.getMessage());
             return nota;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
 }

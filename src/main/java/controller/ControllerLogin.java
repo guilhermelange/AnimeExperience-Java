@@ -55,7 +55,7 @@ public class ControllerLogin implements ControllerView {
         viewLogin.jLCadastroMouseClicked(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Route.initController(ControllerRegister.class);
+                Routes.initController(ControllerRegister.class);
             }
         });
     }
@@ -76,7 +76,7 @@ public class ControllerLogin implements ControllerView {
                     } else {
                         usuario.setAuthenticates(true);
                         Session.setUsuario(usuario);
-                        Route.initController(ControllerHome.class);
+                        Routes.initController(ControllerHome.class);
                     }
                 } catch (Exception ex) {
                     Util.message(ex.getMessage());

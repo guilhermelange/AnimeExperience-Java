@@ -22,25 +22,27 @@ public class ControllerHome implements ControllerView {
 
     public ControllerHome() {
         viewHome = new ViewHome();
-        addFavoritesAction();
-        addTableNewAction();
-        addTablePopularAction();
-        applyViewDefaults();
+        apllyActionsDefault();
     }
     
     @Override
     public void refreshView() {
         viewHome.dispose();
         viewHome = new ViewHome();
-        addFavoritesAction();
-        addTableNewAction();
-        addTablePopularAction();
-        applyViewDefaults();
+        apllyActionsDefault();
     }
     
     @Override
     public void showView() {
         Screen.fullScreen(viewHome);
+    }
+    
+    private void apllyActionsDefault() {
+        addFavoritesAction();
+        addTableNewAction();
+        addTablePopularAction();
+        addLogoffAction();
+        applyViewDefaults();
     }
     
     @Override
@@ -86,7 +88,7 @@ public class ControllerHome implements ControllerView {
         viewHome.jLfavoritosMouseClicked(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Route.initController(ControllerFavorites.class);
+                Routes.initController(ControllerFavorites.class);
             }
         });
     }
@@ -102,7 +104,7 @@ public class ControllerHome implements ControllerView {
                         Session.setAnime(entry.getValue());
                     }
                 }
-                Route.initController(ControllerAnime.class);
+                Routes.initController(ControllerAnime.class);
             }
         });
     }
@@ -118,7 +120,16 @@ public class ControllerHome implements ControllerView {
                         Session.setAnime(entry.getValue());
                     }
                 }
-                Route.initController(ControllerAnime.class);
+                Routes.initController(ControllerAnime.class);
+            }
+        });
+    }
+    
+    private void addLogoffAction() {
+        viewHome.jLlogoutMouseClicked(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Routes.logoff();
             }
         });
     }

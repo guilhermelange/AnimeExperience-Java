@@ -65,7 +65,7 @@ public class ControllerRegister implements ControllerView {
                                 if (buscaUsuario == null) {
                                     usuarioDAO.insert(usuario);
                                     Util.message("Usuário inserido com sucesso!");
-                                    Route.initController(ControllerLogin.class);
+                                    Routes.initController(ControllerLogin.class);
                                 } else {
                                     Util.message("Usuário já cadastrado!");
                                 }
@@ -83,7 +83,7 @@ public class ControllerRegister implements ControllerView {
         viewRegister.jLloginMouseClicked(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Route.initController(ControllerLogin.class);
+                Routes.initController(ControllerLogin.class);
             }
         });
     }

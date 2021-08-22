@@ -65,7 +65,7 @@ public class ControllerVideoPlayer implements ControllerView {
                 if (jxbrowser != null) {
                     jxbrowser.close();
                 }
-                Route.initBackPage();
+                Routes.initBackPage();
             }
         });
     }

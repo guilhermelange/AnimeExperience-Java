@@ -1,6 +1,6 @@
 package daos;
 
-import conf.DBConexao;
+import conf.DBConnection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import model.Episodio;
 
 public class EpisodioDAO {
     public ArrayList<Episodio> buscaPorAnimeTemp(long animeId, int tempNum) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM episodio WHERE aniid = ? AND tempnum = ?";
         PreparedStatement pstmt;
         ArrayList<Episodio> episodios = new ArrayList<Episodio>();
@@ -39,7 +39,7 @@ public class EpisodioDAO {
             System.out.println(e.getMessage());
             return episodios;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
 }

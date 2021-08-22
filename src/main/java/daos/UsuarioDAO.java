@@ -1,6 +1,6 @@
 package daos;
 
-import conf.DBConexao;
+import conf.DBConnection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import model.Usuario;
 
 public class UsuarioDAO {
     public boolean insert(Usuario usuario) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "INSERT INTO usuario (usuema, usunom, ususen) "
                    + "VALUES (?,?,?)";
         PreparedStatement pstmt;
@@ -32,12 +32,12 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public boolean update(Usuario usuario) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "UPDATE usuario SET usuema=?,usunom=?,ususen=?"
                    + "WHERE usuid = ?";
         PreparedStatement pstmt;
@@ -56,12 +56,12 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
             return false;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public Usuario buscaPorId(long id) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM usuario WHERE usuid = ?";
         PreparedStatement pstmt;
         Usuario usuario = null;
@@ -86,12 +86,12 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
             return usuario;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public Usuario buscaUsuario(String email, String senha) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM usuario WHERE usuema=? AND ususen=?";
         PreparedStatement pstmt;
         Usuario usuario = null;
@@ -118,12 +118,12 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
             return usuario;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
     
     public Usuario buscaUsuario(String email) {
-        Connection connection = DBConexao.conectar();
+        Connection connection = DBConnection.conectar();
         String sql = "SELECT * FROM usuario WHERE usuema=?";
         PreparedStatement pstmt;
         Usuario usuario = null;
@@ -148,7 +148,7 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
             return usuario;
         } finally {
-            DBConexao.desconectar();
+            DBConnection.desconectar();
         }
     }
 }

@@ -9,9 +9,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import model.Anime;
 
-public class ViewHome extends javax.swing.JFrame {
+public class ViewHome1 extends javax.swing.JFrame {
     private HashMap<Point, model.Anime> animesIndex;
-    public ViewHome() {
+    public ViewHome1() {
         initComponents();
     }
     
@@ -33,7 +33,6 @@ public class ViewHome extends javax.swing.JFrame {
         jTPopulares = new javax.swing.JTable();
         jLadicionados = new javax.swing.JLabel();
         jLlogo1 = new javax.swing.JLabel();
-        jLlogout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +46,7 @@ public class ViewHome extends javax.swing.JFrame {
         jLnome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLnome.setForeground(new java.awt.Color(255, 255, 255));
         jLnome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/image/user.png"))); // NOI18N
-        jLnome.setText("nome");
+        jLnome.setText("Guilherme");
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -107,42 +106,36 @@ public class ViewHome extends javax.swing.JFrame {
 
         jLlogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/image/logo.png"))); // NOI18N
 
-        jLlogout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLlogout.setForeground(new java.awt.Color(255, 255, 255));
-        jLlogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/image/logout.png"))); // NOI18N
-
         javax.swing.GroupLayout jPcontainerLayout = new javax.swing.GroupLayout(jPcontainer);
         jPcontainer.setLayout(jPcontainerLayout);
         jPcontainerLayout.setHorizontalGroup(
             jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPcontainerLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPcontainerLayout.createSequentialGroup()
+                        .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLadicionados)
+                            .addComponent(jLpopulares))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPcontainerLayout.createSequentialGroup()
+                .addComponent(jSeparator1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontainerLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLlogo1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLfavoritos)
+                .addGap(94, 94, 94)
+                .addComponent(jLnome)
+                .addGap(58, 58, 58))
+            .addGroup(jPcontainerLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLogo2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPcontainerLayout.createSequentialGroup()
-                .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPcontainerLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)
-                            .addGroup(jPcontainerLayout.createSequentialGroup()
-                                .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLadicionados)
-                                    .addComponent(jLpopulares))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontainerLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLlogo1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLfavoritos)
-                        .addGap(66, 66, 66)
-                        .addComponent(jLnome)
-                        .addGap(72, 72, 72)
-                        .addComponent(jLlogout)
-                        .addGap(25, 25, 25)))
-                .addContainerGap())
         );
         jPcontainerLayout.setVerticalGroup(
             jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,8 +144,7 @@ public class ViewHome extends javax.swing.JFrame {
                 .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPcontainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLfavoritos)
-                        .addComponent(jLnome)
-                        .addComponent(jLlogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLnome))
                     .addComponent(jLlogo1))
                 .addGap(35, 35, 35)
                 .addComponent(jLpopulares)
@@ -179,7 +171,7 @@ public class ViewHome extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(42, 42, 42))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +179,7 @@ public class ViewHome extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,10 +221,6 @@ public class ViewHome extends javax.swing.JFrame {
         jLfavoritos.addMouseListener(acao);
     }
     
-    public void jLlogoutMouseClicked(MouseListener acao){
-        jLlogout.addMouseListener(acao);
-    }
-    
     public void jTPopularesMouseClicked(MouseListener acao){
         jTPopulares.addMouseListener(acao);
     }
@@ -246,7 +234,6 @@ public class ViewHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLadicionados;
     private javax.swing.JLabel jLfavoritos;
     private javax.swing.JLabel jLlogo1;
-    private javax.swing.JLabel jLlogout;
     private javax.swing.JLabel jLnome;
     private javax.swing.JLabel jLogo2;
     private javax.swing.JLabel jLpopulares;

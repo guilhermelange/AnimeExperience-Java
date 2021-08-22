@@ -69,7 +69,7 @@ public class ControllerFavorites implements ControllerView {
         viewFavorites.jLVoltarMouseClicked(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Route.initBackPage();
+                Routes.initBackPage();
             }
         });
     }
@@ -91,7 +91,7 @@ public class ControllerFavorites implements ControllerView {
                     }
                 }
                 if (localizado){
-                    Route.initController(ControllerAnime.class);
+                    Routes.initController(ControllerAnime.class);
                 }
             }
         });

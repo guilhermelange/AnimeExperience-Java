@@ -41,18 +41,17 @@ public class ControllerAnime implements ControllerView {
         viewAnime = new ViewAnime();
         animeDAO = new AnimeDAO();
         animeCarregado = Session.getAnime();
-        addVoltarAction();
-        addFavoritarAction();
-        addTableAction();
-        addSeasonAction();
-        addEstrelasAction();
-        applyViewDefaults();
+        apllyActionsDefault();
     }
     
     @Override
     public void refreshView() {
         viewAnime.dispose();
         viewAnime = new ViewAnime();
+        apllyActionsDefault();
+    }
+    
+    private void apllyActionsDefault() {
         addVoltarAction();
         addFavoritarAction();
         addTableAction();
@@ -188,7 +187,7 @@ public class ControllerAnime implements ControllerView {
                 if (jxbrowser != null) {
                     jxbrowser.close();
                 }
-                Route.initBackPage();
+                Routes.initBackPage();
             }
         });
     }
@@ -215,7 +214,7 @@ public class ControllerAnime implements ControllerView {
             public void mouseClicked(MouseEvent e) {
                 int row = viewAnime.getJTable1().rowAtPoint(e.getPoint());
                 Session.setEpisodio(episodiosIndex.get(row));
-                Route.initController(ControllerVideoPlayer.class);
+                Routes.initController(ControllerVideoPlayer.class);
             }
         });
     }
@@ -367,7 +366,7 @@ public class ControllerAnime implements ControllerView {
         estrela5.setText("");
         
         double avaliacaoGeral = animeDAO.buscaAvaliacaoGeral(animeCarregado.getId(), usuario.getId());
-        String descricaoAvaliacao = String.format("%,.2f", avaliacaoGeral);
+        String descricaoAvaliacao = String.format("%,.1f", avaliacaoGeral);
         viewAnime.getJLavaliacaogeral().setText(descricaoAvaliacao);
     }
 }
