@@ -92,6 +92,15 @@ public class Util {
         field.setIcon(new ImageIcon(util.getClass().getResource("/static/image/" + icon)));   
     }
     
+    public static void setIcon(JLabel field, String icon, int width, int heigth) {
+        Util util = new Util();
+        Image imageIcon = new ImageIcon(util.getClass()
+                                                .getResource("/static/image/" + icon))
+                                                .getImage()
+                                                .getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
+        field.setIcon(new ImageIcon(imageIcon));   
+    }
+    
     public static void applyTextAreaProperties(JTextArea textArea, JScrollPane scroll) {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
@@ -136,15 +145,6 @@ public class Util {
     public static void message(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
-    
-    public static void openJxBrowserView(JInternalFrame frame, JPanel panel, String link, Dimension size) {
-        JXBrowser browser = new JXBrowser();
-        frame = browser.openInternalFrame(link, size);
-        ((BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-        panel.add(frame);
-        panel.setBorder(null);
-        frame.setBorder(null);
-    }
 
     public static DefaultTableCellRenderer getImageCellRender() {
         return new DefaultTableCellRenderer() {
@@ -161,7 +161,7 @@ public class Util {
                 ImageIcon imageIcon = new ImageIcon(
                         new ImageIcon(filename)
                                 .getImage()
-                                .getScaledInstance(160, 240, Image.SCALE_DEFAULT)
+                                .getScaledInstance(160, 240, Image.SCALE_SMOOTH)
                 );
                 return new JLabel(imageIcon);
             }

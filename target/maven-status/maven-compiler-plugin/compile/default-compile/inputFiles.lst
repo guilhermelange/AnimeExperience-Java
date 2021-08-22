@@ -1,3 +1,4 @@
+C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\conf\DBConexao.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos\EpisodioDAO.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\model\Colecao.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\ControllerVideoPlayer.java
@@ -6,7 +7,6 @@ C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\view
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\view\ViewFavorites.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\conf\JXBrowser.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\ControllerHome.java
-C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos\DataBase.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos\PlayListDAO.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\model\Temporada.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\view\ViewVideoPlayer.java
@@ -19,12 +19,10 @@ C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\init\App.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\view\ViewRegister.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\conf\Util.java
-C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos\DBConexao.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\view\ViewHome.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\Session.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\daos\UsuarioDAO.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\ControllerRegister.java
-C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\conf\ConnectionFactory.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\conf\JXBrowserV2.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\ControllerView.java
 C:\Users\guilu\OneDrive\Documents\NetBeansProjects\AnEx-Maven\src\main\java\controller\Route.java

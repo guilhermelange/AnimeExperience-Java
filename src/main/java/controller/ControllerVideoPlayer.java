@@ -1,7 +1,7 @@
 package controller;
 
 import com.teamdev.jxbrowser.browser.Browser;
-import conf.JXBrowserV2;
+import conf.JXBrowser;
 import conf.Util;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -50,7 +50,7 @@ public class ControllerVideoPlayer implements ControllerView {
         viewVideoPlayer.getJTextArea1().setText(episodioCarregado.getNumero() + " - " + episodioCarregado.getDescricao());
         
         // Browser
-        jxbrowser = JXBrowserV2.openInternalFrame(viewVideoPlayer, viewVideoPlayer.getJInternalFrame1(), episodioCarregado.getLink(), new Dimension(800, 450));
+        jxbrowser = JXBrowser.openInternalFrame(viewVideoPlayer, viewVideoPlayer.getJInternalFrame1(), episodioCarregado.getLink(), new Dimension(800, 450));
     }
     
     @Override

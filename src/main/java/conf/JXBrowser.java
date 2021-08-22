@@ -1,50 +1,61 @@
 package conf;
-/*
-import com.kingaspx.util.BrowserUtil;
-import com.kingaspx.version.Version;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserPreferences;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import java.awt.BorderLayout;*/
+
+import com.teamdev.jxbrowser.browser.Browser;
+import com.teamdev.jxbrowser.engine.Engine;
+import com.teamdev.jxbrowser.engine.EngineOptions;
+import com.teamdev.jxbrowser.engine.ProprietaryFeature;
+import com.teamdev.jxbrowser.engine.RenderingMode;
+import com.teamdev.jxbrowser.view.swing.BrowserView;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class JXBrowser {
-    /*private Browser browser;
-    private BrowserView view;
-    private JPanel panelAuxiliar;*/
-    
-    public JXBrowser() {
-        /*BrowserUtil.setVersion(Version.V6_22);
-        BrowserPreferences.setChromiumSwitches("--disable-software-rasterizer", "--disable-web-security", "--allow-file-access-from-files");
-        this.browser = new Browser();
-        this.view = new BrowserView(browser);*/
-    }
-    /*
-    public JPanel getPanelAuxiliar() {
-        return panelAuxiliar;
-    }
-    
-    public BrowserView getView() {
-        return view;
-    }*/
-    
-    public JInternalFrame openInternalFrame(String url, Dimension dimension) {
-        /*JPanel panel = new JPanel(new BorderLayout());
-        panel.add(this.view);
-        panel.setPreferredSize(dimension);
         
-        JInternalFrame frame = new JInternalFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(panel);
-        frame.setSize(dimension);
-        frame.setVisible(true);
+    public static Browser openInternalFrame(JFrame currentFrame,
+                                  JInternalFrame embedFrame, 
+                                  String url, 
+                                  Dimension dimension) {
+        System.setProperty("jxbrowser.license.key", "1BNDHFSC1FZZQVZ0G4D3TRQXPQCKBT3AZ78SNXJ8FDG1ZFLBIHKTGLQC9GGWB666XIVIWW");
+        Engine engine = Engine.newInstance(
+                EngineOptions.newBuilder(RenderingMode.HARDWARE_ACCELERATED)
+                .enableProprietaryFeature(ProprietaryFeature.AAC)
+                .enableProprietaryFeature(ProprietaryFeature.H_264)
+                .build());
         
-        browser.loadURL(url);
-        panelAuxiliar = panel;
-        return frame;*/
-        return null;
+        Browser browser = engine.newBrowser();
+        
+        SwingUtilities.invokeLater(() -> {
+            currentFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    engine.close();
+                }
+            });
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(BrowserView.newInstance(browser));
+            panel.setSize(dimension);
+            panel.setBorder(null);
+
+            embedFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            embedFrame.add(panel);
+            embedFrame.setPreferredSize(dimension);
+            embedFrame.setVisible(true);
+            embedFrame.setBorder(null);
+            ((BasicInternalFrameUI) embedFrame.getUI()).setNorthPane(null);
+
+            // Load the required web page.
+            browser.navigation().loadUrl(url);
+        });
+        
+        return browser;
     }
 }

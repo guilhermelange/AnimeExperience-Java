@@ -235,4 +235,86 @@ public class AnimeDAO {
             DBConexao.desconectar();
         }
     }
+    
+    public int buscaUsuarioAvaliacao(long animeId, long usuarioId) {
+        Connection connection = DBConexao.conectar();
+        String sql = "SELECT usuava FROM usuario_avaliacao WHERE aniid=? AND usuid=?";
+        PreparedStatement pstmt;
+
+        int nota = 0;
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, animeId);
+            pstmt.setLong(2, usuarioId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                nota = rs.getInt("usuava");
+                break;
+            }
+            rs.close();
+
+            return nota;     
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return nota;
+        } finally {
+            DBConexao.desconectar();
+        }
+    }
+    
+    public boolean insertUsuarioAvaliacao(long animeId, long usuarioId, int nota) {
+        Connection connection = DBConexao.conectar();
+        String sql = "INSERT INTO usuario_avaliacao (aniid, usuid, usuava) VALUES(?, ?, ?) "
+                   + " ON CONFLICT (aniid, usuid) DO  "
+                   + " UPDATE SET usuava = ? WHERE usuario_avaliacao.aniid = ? AND usuario_avaliacao.usuid = ?";
+        PreparedStatement pstmt;
+
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, animeId);
+            pstmt.setLong(2, usuarioId);
+            pstmt.setInt(3, nota);
+            pstmt.setInt(4, nota);
+            pstmt.setLong(5, animeId);
+            pstmt.setLong(6, usuarioId);
+            pstmt.execute();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            DBConexao.desconectar();
+        }
+    }
+        
+
+    public double buscaAvaliacaoGeral(long animeId, long usuarioId) {
+        Connection connection = DBConexao.conectar();
+        String sql = "SELECT round(COALESCE(sum(usuava)::NUMERIC/count(*), 0), 1) AS nota "
+                   + " FROM usuario_avaliacao "
+                   + " WHERE aniid = ?";
+        PreparedStatement pstmt;
+
+        double nota = 0;
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, animeId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                nota = rs.getDouble("nota");
+                break;
+            }
+            rs.close();
+
+            return nota;     
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return nota;
+        } finally {
+            DBConexao.desconectar();
+        }
+    }
 }

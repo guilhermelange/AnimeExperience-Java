@@ -1,7 +1,7 @@
 package controller;
 
 import com.teamdev.jxbrowser.browser.Browser;
-import conf.JXBrowserV2;
+import conf.JXBrowser;
 import conf.Util;
 import daos.AnimeDAO;
 import daos.EpisodioDAO;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -44,6 +45,7 @@ public class ControllerAnime implements ControllerView {
         addFavoritarAction();
         addTableAction();
         addSeasonAction();
+        addEstrelasAction();
         applyViewDefaults();
     }
     
@@ -55,6 +57,7 @@ public class ControllerAnime implements ControllerView {
         addFavoritarAction();
         addTableAction();
         addSeasonAction();
+        addEstrelasAction();
         applyViewDefaults();
     }
     
@@ -78,8 +81,17 @@ public class ControllerAnime implements ControllerView {
         // Atualizar Usuário
         usuario = Session.getUsuario();
         viewAnime.getJLusuario().setText(usuario.getName());
-
+        
+        viewAnime.getJLanocriacao().setText(String.valueOf(animeCarregado.getAnoCriacao()));
+        
         Util.applyTextAreaProperties(viewAnime.getJTextArea1(), viewAnime.getJScrollPane3());
+        
+        String classIndicativa = "classificacao-" + String.valueOf(animeCarregado.getClassificacaoIndicativa()) + ".png";
+        Util.setIcon(viewAnime.getJLclassiInd(), classIndicativa, 40, 40);
+        viewAnime.getJLclassiInd().setText("");
+        
+        int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+        atualizaAvaliacao(nota);
         
         PlayList playlist = null;
         if (animeCarregado != null) {
@@ -94,7 +106,7 @@ public class ControllerAnime implements ControllerView {
         
         // Abre Player no Spotify
         if (playlist != null) {
-            jxbrowser = JXBrowserV2.openInternalFrame(viewAnime, viewAnime.getJInternalFrame2(), playlist.getLink(), new Dimension(1260, 340));
+            jxbrowser = JXBrowser.openInternalFrame(viewAnime, viewAnime.getJInternalFrame2(), playlist.getLink(), new Dimension(1260, 340));
             viewAnime.getJPanel3().setBorder(null);
         }
         ((BasicInternalFrameUI) viewAnime.getJInternalFrame2().getUI()).setNorthPane(null);
@@ -111,6 +123,9 @@ public class ControllerAnime implements ControllerView {
         temporadas.forEach(temporada -> {
             viewAnime.getJCtemporadas().addItem(temporada);
         });
+        
+        String qtdTemporadas = String.valueOf(temporadas.stream().count()) + " Temporadas";
+        viewAnime.getJLqtdTemporada().setText(qtdTemporadas);
         
         updateEpisodios();
         
@@ -212,5 +227,147 @@ public class ControllerAnime implements ControllerView {
                 updateEpisodios();
             }
         });
+    }
+    
+    private void addEstrelasAction() {
+        viewAnime.jLestrela1MouseEntered(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                atualizaAvaliacao(1);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (animeDAO.insertUsuarioAvaliacao(animeCarregado.getId(), usuario.getId(), 1)){
+                    int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+                    atualizaAvaliacao(nota);
+                }
+            }
+        });
+        
+        viewAnime.jLestrela2MouseEntered(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                atualizaAvaliacao(2);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (animeDAO.insertUsuarioAvaliacao(animeCarregado.getId(), usuario.getId(), 2)){
+                    int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+                    atualizaAvaliacao(nota);
+                }
+            }
+        });
+        
+        viewAnime.jLestrela3MouseEntered(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                atualizaAvaliacao(3);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (animeDAO.insertUsuarioAvaliacao(animeCarregado.getId(), usuario.getId(), 3)){
+                    int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+                    atualizaAvaliacao(nota);
+                }
+            }
+        });
+        
+        viewAnime.jLestrela4MouseEntered(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                atualizaAvaliacao(4);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (animeDAO.insertUsuarioAvaliacao(animeCarregado.getId(), usuario.getId(), 4)){
+                    int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+                    atualizaAvaliacao(nota);
+                }
+            }
+        });
+        
+        viewAnime.jLestrela5MouseEntered(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                atualizaAvaliacao(5);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (animeDAO.insertUsuarioAvaliacao(animeCarregado.getId(), usuario.getId(), 5)){
+                    int nota = animeDAO.buscaUsuarioAvaliacao(animeCarregado.getId(), usuario.getId());
+                    atualizaAvaliacao(nota);
+                }
+            }
+        });
+    }
+    
+    private void atualizaAvaliacao(int nota) {
+        JLabel estrela1 = viewAnime.getJLestrela1();
+        JLabel estrela2 = viewAnime.getJLestrela2();
+        JLabel estrela3 = viewAnime.getJLestrela3();
+        JLabel estrela4 = viewAnime.getJLestrela4();
+        JLabel estrela5 = viewAnime.getJLestrela5();
+        
+        String imageStar = "star.png";
+        String imageStarOff = "staroff.png";
+        switch(nota) {
+            case 0: 
+                Util.setIcon(estrela1, imageStarOff);
+                Util.setIcon(estrela2, imageStarOff);
+                Util.setIcon(estrela3, imageStarOff);
+                Util.setIcon(estrela4, imageStarOff);
+                Util.setIcon(estrela5, imageStarOff);
+                break;
+            case 1: 
+                Util.setIcon(estrela1, imageStar);
+                Util.setIcon(estrela2, imageStarOff);
+                Util.setIcon(estrela3, imageStarOff);
+                Util.setIcon(estrela4, imageStarOff);
+                Util.setIcon(estrela5, imageStarOff);
+                break;
+            case 2:
+                Util.setIcon(estrela1, imageStar);
+                Util.setIcon(estrela2, imageStar);
+                Util.setIcon(estrela3, imageStarOff);
+                Util.setIcon(estrela4, imageStarOff);
+                Util.setIcon(estrela5, imageStarOff);
+                break;
+            case 3:
+                Util.setIcon(estrela1, imageStar);
+                Util.setIcon(estrela2, imageStar);
+                Util.setIcon(estrela3, imageStar);
+                Util.setIcon(estrela4, imageStarOff);
+                Util.setIcon(estrela5, imageStarOff);
+                break;
+            case 4:
+                Util.setIcon(estrela1, imageStar);
+                Util.setIcon(estrela2, imageStar);
+                Util.setIcon(estrela3, imageStar);
+                Util.setIcon(estrela4, imageStar);
+                Util.setIcon(estrela5, imageStarOff);
+                break;
+            case 5:
+                Util.setIcon(estrela1, imageStar);
+                Util.setIcon(estrela2, imageStar);
+                Util.setIcon(estrela3, imageStar);
+                Util.setIcon(estrela4, imageStar);
+                Util.setIcon(estrela5, imageStar);
+                break;
+        }
+        
+        estrela1.setText("");
+        estrela2.setText("");
+        estrela3.setText("");
+        estrela4.setText("");
+        estrela5.setText("");
+        
+        double avaliacaoGeral = animeDAO.buscaAvaliacaoGeral(animeCarregado.getId(), usuario.getId());
+        String descricaoAvaliacao = String.format("%,.2f", avaliacaoGeral);
+        viewAnime.getJLavaliacaogeral().setText(descricaoAvaliacao);
     }
 }
