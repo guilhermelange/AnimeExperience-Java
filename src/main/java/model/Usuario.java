@@ -1,10 +1,6 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.springframework.jdbc.core.RowMapper;
-
-public class Usuario implements RowMapper<Usuario>{
+public class Usuario {
     private long id;
     private String email;
     private String password;
@@ -71,14 +67,5 @@ public class Usuario implements RowMapper<Usuario>{
     @Override
     public String toString() {
         return String.format("Id: %d, Nome: %s, Email: %s", getId(), getName(), getEmail());
-    }
-
-    @Override
-    public Usuario mapRow(ResultSet rs, int i) throws SQLException {
-        Usuario usuario = new Usuario(rs.getString("usuema"),
-                                      rs.getString("ususen"),
-                                      rs.getString("usunom"),
-                                      rs.getLong("usuid"));
-        return usuario;
     }
 }
