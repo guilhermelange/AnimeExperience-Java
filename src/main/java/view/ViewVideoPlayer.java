@@ -77,6 +77,7 @@ public class ViewVideoPlayer extends javax.swing.JFrame {
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jTextArea1.setRows(2);
         jTextArea1.setPreferredSize(new java.awt.Dimension(232, 40));
         jScrollPane3.setViewportView(jTextArea1);
