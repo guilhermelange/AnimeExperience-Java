@@ -1,6 +1,6 @@
 package controller;
 
-import conf.Util;
+import util.Util;
 import daos.UsuarioDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,6 +1,6 @@
 package view;
 
-import conf.Util;
+import util.Util;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import javax.swing.JPasswordField;

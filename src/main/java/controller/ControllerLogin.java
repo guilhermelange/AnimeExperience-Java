@@ -1,6 +1,6 @@
 package controller;
 
-import conf.Util;
+import util.Util;
 import daos.UsuarioDAO;
 import exceptions.AutenticationException;
 import java.awt.event.ActionEvent;
@@ -66,18 +66,16 @@ public class ControllerLogin implements ControllerView {
             public void actionPerformed(ActionEvent e) {
                 String email = viewLogin.getEmail();
                 String password = viewLogin.getPassword();
-                Usuario user = new Usuario(email, password, "");
                 
                 try {
                     UsuarioDAO usuarioDAO = new UsuarioDAO();
                     Usuario usuario = usuarioDAO.buscaUsuario(email, password);
-                    if (usuario == null) {
+                    if (usuario == null) 
                         throw new AutenticationException("Usuário não localizado!");
-                    } else {
-                        usuario.setAuthenticates(true);
-                        Session.setUsuario(usuario);
-                        Routes.initController(ControllerHome.class);
-                    }
+                    
+                    usuario.setAuthenticates(true);
+                    Session.setUsuario(usuario);
+                    Routes.initController(ControllerHome.class);
                 } catch (Exception ex) {
                     Util.message(ex.getMessage());
                 }

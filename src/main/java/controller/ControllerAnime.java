@@ -2,7 +2,7 @@ package controller;
 
 import com.teamdev.jxbrowser.browser.Browser;
 import conf.JXBrowser;
-import conf.Util;
+import util.Util;
 import daos.AnimeDAO;
 import daos.EpisodioDAO;
 import daos.PlayListDAO;

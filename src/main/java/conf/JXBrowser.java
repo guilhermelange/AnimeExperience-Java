@@ -23,7 +23,8 @@ public class JXBrowser {
                                   JInternalFrame embedFrame, 
                                   String url, 
                                   Dimension dimension) {
-        System.setProperty("jxbrowser.license.key", "1BNDHFSC1FZZQVZ0G4D3TRQXPQCKBT3AZ78SNXJ8FDG1ZFLBIHKTGLQC9GGWB666XIVIWW");
+        //System.setProperty("jxbrowser.license.key", "1BNDHFSC1FZZQVZ0G4D3TRQXPQCKBT3AZ78SNXJ8FDG1ZFLBIHKTGLQC9GGWB666XIVIWW");
+        System.setProperty("jxbrowser.license.key", "6P835FT5HAPTB03TPIEFPGU5ECGJN8GMGDD79MD7Y52NVP0K0IV6FHYZVQI25H0MLGI2");
         Engine engine = Engine.newInstance(
                 EngineOptions.newBuilder(RenderingMode.HARDWARE_ACCELERATED)
                 .enableProprietaryFeature(ProprietaryFeature.AAC)

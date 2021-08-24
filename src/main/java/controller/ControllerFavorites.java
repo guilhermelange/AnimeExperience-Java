@@ -1,6 +1,6 @@
 package controller;
 
-import conf.Util;
+import util.Util;
 import daos.AnimeDAO;
 import java.awt.Dimension;
 import java.awt.Point;

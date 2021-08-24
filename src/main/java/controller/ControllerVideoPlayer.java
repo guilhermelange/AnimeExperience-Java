@@ -2,11 +2,12 @@ package controller;
 
 import com.teamdev.jxbrowser.browser.Browser;
 import conf.JXBrowser;
-import conf.Util;
+import util.Util;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import model.Anime;
 import model.Episodio;
 import view.ViewVideoPlayer;
